@@ -1,40 +1,37 @@
+# Worker Database Case Study
 
-Worker Database Case Study
+Production-ready schema script definitions and relational analytics suite for standard enterprise corporate structures.
 
-A comprehensive, production-grade relational database schema and analytical suite built to handle enterprise HR data, tracking organizational hierarchies, performance incentives, and employee lifecycles.
-This repository provides an optimized SQL architecture modeling Worker, Bonus, and Title entities, complete with complex relational analytical queries.
+## 📋 Data Dictionary
 
-🏗️ Architecture & Data Model
+### 1. Workers
 
-The schema uses a relational layout designed for high data integrity, strict referential actions, and fast transactional workloads.
-       ┌─────────────────┐
-       │     WORKERS     │
-       └────────┬────────┘
-                │ 1
-        ┌───────┴───────┐
-        │               │
-      N │             N │
-┌───────▼───────┐     ┌─▼─────────────┐
-│    BONUSES    │     │    TITLES     │
-└───────────────┘     └───────────────┘
+| Column Name | Data Type | Key Type | Description |
+| :--- | :--- | :--- | :--- |
+| `WORKER_ID` | INT | Primary Key | Unique employee identifier |
+| `FIRST_NAME` | VARCHAR(25) | - | Given employee name |
+| `LAST_NAME` | VARCHAR(25) | - | Surname |
+| `SALARY` | INT | - | Annual/Monthly gross base salary |
+| `JOINING_DATE` | DATETIME | - | Timestamp of onboarding |
+| `DEPARTMENT` | VARCHAR(25) | - | Organizational unit placement |
 
-1. Workers Core (Workers Table)
+### 2. Bonuses
 
-• Actively maintains the master ledger for all organizational personnel.
-• Tracks operational metrics: unique operational identifiers (worker_id), payroll data, structural placement (department), and organizational onboarding cycles (joining_date).
+| Column Name | Data Type | Key Type | Description |
+| :--- | :--- | :--- | :--- |
+| `WORKER_REF_ID` | INT | Foreign Key | References `Workers(WORKER_ID)` |
+| `BONUS_AMOUNT` | INT | - | Distributed monetary reward amount |
+| `BONUS_DATE` | DATETIME | - | Transaction processing timestamp |
 
-2. Performance Incentives (Bonuses Table)
+### 3. Titles
 
-• Manages variable compensation outlays linked directly to historical performance milestones.
-• Normalizes monetary compensation adjustments while maintaining transactional logs independent of baseline salary data.
+| Column Name | Data Type | Key Type | Description |
+| :--- | :--- | :--- | :--- |
+| `WORKER_REF_ID` | INT | Foreign Key | References `Workers(WORKER_ID)` |
+| `JOB_TITLE` | VARCHAR(25) | - | Position title (Manager, Executive, etc.) |
+| `AFFECTED_FROM` | DATETIME | - | Effective start timestamp for title change |
 
-3. Structural Progression & Hierarchy (Titles Table)
-
-• Preserves chronological historical logs of internal corporate shifts, role evaluations, and professional title tiers.
-• Prevents data anomalies by decoupling individual personnel identities from temporal operational titles.
-
-🛠️ Tech Stack & Optimization
-
-• Dialect Compatibility: Standard SQL ANSI-compliant (Optimized for MySQL 8.0+ / PostgreSQL 15+)
-• Relational Paradigms: Third Normal Form (3NF) structural design, Foreign Key cascading strategies, Data-type normalization.
-• Analytical Scope: CTEs (Common Table Expressions), Window Functions (RANK(), DENSE_RANK()), Temporal aggregations.
+## ⚙️ Optimization & Design Details
+* **Constraints:** Enforces `NOT NULL` validations across names, dates, and keys.
+* **Cascades:** Configured with `ON DELETE CASCADE` strategies to prevent orphan records.
+* **Compatibility:** Fully compliant with standard SQL syntax environments (MySQL 8.0+, PostgreSQL, Oracle).
