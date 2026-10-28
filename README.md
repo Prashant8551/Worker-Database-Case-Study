@@ -1,15 +1,40 @@
-# Worker-Database-Case-Study
-This repository contains a case study focused on designing and implementing a worker database system. The database includes tables for workers, bonuses, and titles, aimed at efficiently managing employee data within an organization.
 
-Overview
-In today's dynamic workplace environment, managing employee information is crucial for organizational success. This case study delves into the design and implementation of a relational database tailored for this purpose. The database schema comprises three primary tables:
+Worker Database Case Study
 
-tables:
-1. Workers Table: This table stores comprehensive information about each worker, including their unique identifier, name, contact details, department, position, and hire date. Additionally, it may include fields for salary, performance ratings, and other relevant metrics.
-2. Bonuses Table: Tracking bonuses is essential for recognizing and rewarding employee performance. The bonuses table captures data related to bonus distributions, such as the worker ID, bonus amount, date awarded, and any associated remarks or criteria.
-3. Titles Table: As employees progress within an organization, their roles and responsibilities may evolve. The titles table maintains a record of various job titles, along with their corresponding levels, descriptions, and any hierarchical relationships.
+A comprehensive, production-grade relational database schema and analytical suite built to handle enterprise HR data, tracking organizational hierarchies, performance incentives, and employee lifecycles.
+This repository provides an optimized SQL architecture modeling Worker, Bonus, and Title entities, complete with complex relational analytical queries.
 
-Technologies Used
-1. Database Management System: Utilize a relational database management system (e.g., MySQL, PostgreSQL) to create and manage the database schema.
-2. SQL: Leverage SQL (Structured Query Language) for defining schema, querying data, and performing data manipulation operations.
-3. Version Control: Employ Git for version control to track changes, collaborate with team members, and maintain a history of modifications.
+🏗️ Architecture & Data Model
+
+The schema uses a relational layout designed for high data integrity, strict referential actions, and fast transactional workloads.
+       ┌─────────────────┐
+       │     WORKERS     │
+       └────────┬────────┘
+                │ 1
+        ┌───────┴───────┐
+        │               │
+      N │             N │
+┌───────▼───────┐     ┌─▼─────────────┐
+│    BONUSES    │     │    TITLES     │
+└───────────────┘     └───────────────┘
+
+1. Workers Core (Workers Table)
+
+• Actively maintains the master ledger for all organizational personnel.
+• Tracks operational metrics: unique operational identifiers (worker_id), payroll data, structural placement (department), and organizational onboarding cycles (joining_date).
+
+2. Performance Incentives (Bonuses Table)
+
+• Manages variable compensation outlays linked directly to historical performance milestones.
+• Normalizes monetary compensation adjustments while maintaining transactional logs independent of baseline salary data.
+
+3. Structural Progression & Hierarchy (Titles Table)
+
+• Preserves chronological historical logs of internal corporate shifts, role evaluations, and professional title tiers.
+• Prevents data anomalies by decoupling individual personnel identities from temporal operational titles.
+
+🛠️ Tech Stack & Optimization
+
+• Dialect Compatibility: Standard SQL ANSI-compliant (Optimized for MySQL 8.0+ / PostgreSQL 15+)
+• Relational Paradigms: Third Normal Form (3NF) structural design, Foreign Key cascading strategies, Data-type normalization.
+• Analytical Scope: CTEs (Common Table Expressions), Window Functions (RANK(), DENSE_RANK()), Temporal aggregations.
